@@ -1,0 +1,1140 @@
+<!doctype html>
+<html lang="en" data-motion="auto">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Today Skills — Free courses, internships and portfolio resources</title>
+<meta name="description" content="Free courses, internships, portfolio inspiration, GitHub repositories and project ideas — each listed with what is actually free, what isn't, and when it was last checked.">
+<meta name="theme-color" content="#FBF8F2">
+<!-- FAVICON: set BRAND.faviconUrl in the <script> at the bottom of this file. It is injected at runtime so no empty href is requested. -->
+<script>document.documentElement.classList.add('js');</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=IBM+Plex+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+/* ==========================================================================
+   TODAY SKILLS — SHARED DESIGN SYSTEM
+   Every section page copies this :root block, the NAV, the CARD and the FOOTER
+   styles so the whole site stays consistent. Edit tokens here first.
+   ========================================================================== */
+:root{
+  --paper:#FBF8F2; --paper-2:#F4EEE3; --surface:#FFFFFF;
+  --ink:#16202C; --ink-2:#3E4956; --ink-3:#5F6A78; --line:#E6DFD2; --line-2:#D8CFBE;
+
+  /* One accent per section — each page sets --sec / --sec-soft from these */
+  --teal:#16796F;  --teal-soft:#DCEFEC;      /* Courses */
+  --terra:#BE4A27; --terra-soft:#FBE4DA;     /* Internships */
+  --plum:#7B3F73;  --plum-soft:#F0E1EE;      /* Portfolios */
+  --graphite:#2B3441; --graphite-soft:#E6EAF0; /* GitHub */
+  --marigold:#B87800; --marigold-soft:#FBEFCF; /* Projects */
+  --sky:#2B6CB0;   --sky-soft:#DDE9F7;       /* Resources */
+
+  --radius:18px; --radius-sm:12px;
+  --shadow-1:0 1px 2px rgba(22,32,44,.06), 0 6px 18px rgba(22,32,44,.06);
+  --shadow-2:0 2px 4px rgba(22,32,44,.06), 0 14px 34px rgba(22,32,44,.10);
+  --font-display:"Fraunces", Georgia, "Times New Roman", serif;
+  --font-body:"Manrope", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-mono:"IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  --gutter:clamp(16px,4vw,32px);
+  --ease:cubic-bezier(.2,.7,.2,1);
+}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+html[data-motion="reduced"]{scroll-behavior:auto}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{margin:0;background:var(--paper);color:var(--ink);font:400 1rem/1.6 var(--font-body);-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+img,svg{max-width:100%;display:block}
+a{color:inherit}
+h1,h2,h3,h4{font-family:var(--font-display);font-weight:600;line-height:1.12;letter-spacing:-.01em;margin:0}
+p{margin:0}
+ul,ol{margin:0;padding:0}
+button,input,select,textarea{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--sky);outline-offset:2px;border-radius:6px}
+.i{width:1.15em;height:1.15em;flex:none;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.container{width:min(1160px,100% - 2*var(--gutter));margin-inline:auto}
+.sr-only{position:absolute!important;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.skip-link{position:fixed;left:12px;top:-80px;z-index:100;background:var(--ink);color:#fff;padding:10px 16px;border-radius:10px;text-decoration:none;font-weight:700;transition:top .2s}
+.skip-link:focus{top:12px}
+.eyebrow{font:700 .74rem/1 var(--font-body);letter-spacing:.12em;text-transform:uppercase;color:var(--sec,var(--ink-3))}
+
+/* ---------- Buttons ---------- */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.55em;border:1.5px solid transparent;border-radius:999px;padding:.78em 1.3em;font-weight:700;font-size:.95rem;line-height:1.1;text-decoration:none;cursor:pointer;background:var(--ink);color:#fff;transition:transform .2s var(--ease),box-shadow .2s var(--ease),background .2s,border-color .2s;white-space:nowrap}
+.btn:hover{transform:translateY(-1px);box-shadow:var(--shadow-1)}
+.btn:active{transform:translateY(0)}
+.btn-teal{background:var(--teal)} .btn-terra{background:var(--terra)} .btn-plum{background:var(--plum)}
+.btn-graphite{background:var(--graphite)} .btn-marigold{background:var(--marigold)} .btn-sky{background:var(--sky)}
+.btn-ghost{background:transparent;color:var(--ink);border-color:var(--line-2)}
+.btn-ghost:hover{border-color:var(--ink);background:rgba(255,255,255,.7)}
+.btn-sm{padding:.6em 1em;font-size:.86rem}
+.btn[disabled]{opacity:.55;cursor:not-allowed;transform:none;box-shadow:none}
+.btn .i{width:1.05em;height:1.05em}
+.icon-btn{display:inline-grid;place-items:center;width:40px;height:40px;border-radius:50%;border:1px solid transparent;background:transparent;cursor:pointer;color:var(--ink);transition:background .2s,border-color .2s}
+.icon-btn:hover{background:var(--paper-2)}
+.icon-btn[aria-expanded="true"]{background:var(--ink);color:#fff}
+.icon-btn .i{width:20px;height:20px}
+
+/* ---------- Floating navbar ---------- */
+.nav-wrap{position:fixed;inset:14px 0 auto 0;z-index:60;display:flex;justify-content:center;padding-inline:12px;pointer-events:none;transition:transform .38s var(--ease)}
+.nav-wrap.is-hidden{transform:translateY(calc(-100% - 28px))}
+.nav{pointer-events:auto;position:relative;width:min(1120px,100%);display:flex;align-items:center;gap:8px;background:rgba(255,255,255,.88);-webkit-backdrop-filter:saturate(1.4) blur(14px);backdrop-filter:saturate(1.4) blur(14px);border:1px solid var(--line);border-radius:999px;padding:7px 8px 7px 12px;box-shadow:var(--shadow-2)}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;font-family:var(--font-display);font-weight:700;font-size:1.12rem;letter-spacing:-.01em;margin-right:auto;min-width:0}
+.brand-name{white-space:nowrap}
+.logo-slot{display:grid;place-items:center;width:36px;height:36px;border-radius:11px;overflow:hidden;flex:none}
+.logo-slot img{width:100%;height:100%;object-fit:contain}
+.logo-ph{display:grid;place-items:center;width:100%;height:100%;border:1.5px dashed var(--line-2);border-radius:inherit;color:var(--ink-3);background:var(--paper-2)}
+.logo-ph .i{width:18px;height:18px}
+.nav-links{list-style:none;display:none;gap:2px;margin:0 6px}
+.nav-links a{display:block;padding:.55em .8em;border-radius:999px;text-decoration:none;font-weight:600;font-size:.9rem;color:var(--ink-2);transition:background .2s,color .2s}
+.nav-links a:hover{background:var(--paper-2);color:var(--ink)}
+.nav-links a[aria-current="page"]{background:var(--ink);color:#fff}
+.nav-cta{display:none}
+@media (min-width:1020px){.nav-links{display:flex}.nav-cta{display:inline-flex}}
+.menu{position:absolute;right:6px;top:calc(100% + 10px);width:min(330px,calc(100vw - 24px));max-height:min(72vh,560px);overflow:auto;background:var(--surface);border:1px solid var(--line);border-radius:20px;box-shadow:var(--shadow-2);padding:8px;transform-origin:top right;animation:pop .18s var(--ease)}
+.menu[hidden]{display:none}
+@keyframes pop{from{opacity:0;transform:translateY(-6px) scale(.98)}to{opacity:1;transform:none}}
+.menu-group{padding:6px 0}
+.menu-group+.menu-group{border-top:1px solid var(--line)}
+.menu-label{padding:8px 12px 4px;font:700 .7rem/1 var(--font-body);letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3)}
+.menu-item{display:flex;align-items:center;gap:10px;width:100%;text-align:left;padding:.62em 12px;border-radius:12px;border:0;background:transparent;text-decoration:none;cursor:pointer;font-weight:600;font-size:.92rem;color:var(--ink)}
+.menu-item:hover,.menu-item:focus-visible{background:var(--paper-2)}
+.menu-item .i{color:var(--ink-3)}
+.menu-item .swatch{width:10px;height:10px;border-radius:3px;background:var(--c);flex:none}
+.menu-item .state{margin-left:auto;font:600 .75rem var(--font-mono);color:var(--ink-3)}
+.menu-item[aria-disabled="true"]{opacity:.55;cursor:not-allowed}
+
+/* ---------- Tags / badges ---------- */
+.tag{display:inline-flex;align-items:center;gap:.4em;padding:.28em .7em;border-radius:999px;font:700 .74rem/1.2 var(--font-body);letter-spacing:.01em;border:1px solid transparent;white-space:nowrap}
+.tag-free{background:var(--teal-soft);color:#0B5A52;border-color:#BFE0DB}
+.tag-cond{background:var(--marigold-soft);color:#7A4F00;border-color:#EBD59A}
+.tag-paid{background:var(--terra-soft);color:#8E3314;border-color:#F1C3B1}
+.tag-info{background:var(--sky-soft);color:#1D4E85;border-color:#BCD3EE}
+.tag-muted{background:var(--paper-2);color:var(--ink-2);border-color:var(--line)}
+.tag b{display:inline-grid;place-items:center;width:1.45em;height:1.45em;border-radius:50%;background:rgba(255,255,255,.75);font-size:.9em}
+
+/* ---------- Sections ---------- */
+section{position:relative}
+.band{padding:clamp(56px,8vw,104px) 0}
+.sec-head{display:flex;flex-wrap:wrap;align-items:end;justify-content:space-between;gap:16px 32px;margin-bottom:clamp(24px,4vw,40px)}
+.sec-head h2{font-size:clamp(1.8rem,3.6vw,2.75rem);margin-top:10px;max-width:20ch}
+.sec-head p{color:var(--ink-2);max-width:52ch;margin-top:12px}
+.sec-head .lede{flex:1 1 320px}
+.stamp{display:inline-flex;align-items:center;gap:.5em;font:500 .8rem var(--font-mono);color:var(--ink-3);background:var(--surface);border:1px solid var(--line);padding:.45em .8em;border-radius:999px}
+
+/* ---------- Hero ---------- */
+.hero{padding:clamp(120px,16vw,170px) 0 clamp(48px,7vw,88px);--sec:var(--teal);overflow:hidden}
+.hero::before{content:"";position:absolute;inset:0;z-index:-1;background:
+  radial-gradient(900px 420px at 88% 8%, rgba(232,163,23,.16), transparent 60%),
+  radial-gradient(700px 380px at 6% 0%, rgba(22,121,111,.12), transparent 60%),
+  linear-gradient(var(--paper), var(--paper))}
+.hero-grid{display:grid;gap:clamp(32px,5vw,64px);align-items:center}
+@media (min-width:960px){.hero-grid{grid-template-columns:1.1fr .9fr}}
+.hero h1{font-size:clamp(2.5rem,6.2vw,4.6rem);font-weight:600;margin:18px 0 20px;letter-spacing:-.025em}
+.hero h1 em{font-style:italic;color:var(--teal);font-weight:500}
+.hero .sub{font-size:clamp(1.05rem,1.6vw,1.2rem);color:var(--ink-2);max-width:54ch}
+.hero-cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:30px}
+.hero-note{margin-top:22px;font-size:.88rem;color:var(--ink-3);display:flex;gap:.6em;align-items:center}
+.specimen{background:var(--surface);border:1px solid var(--line);border-radius:26px;padding:22px;box-shadow:var(--shadow-2);position:relative;transform:rotate(1.2deg)}
+html[data-motion="reduced"] .specimen{transform:none}
+.specimen::after{content:"";position:absolute;inset:10px -12px -12px 10px;border-radius:26px;background:var(--marigold-soft);z-index:-1;transform:rotate(-2deg)}
+.specimen .eyebrow{display:block;margin-bottom:14px}
+.sp-card{border:1.5px dashed var(--line-2);border-radius:18px;padding:18px;background:var(--paper)}
+.sp-row{display:flex;gap:12px;align-items:center}
+.sp-row small{display:block;color:var(--ink-3);font-weight:600;font-size:.8rem}
+.sp-row strong{font-family:var(--font-display);font-size:1.15rem;font-weight:600}
+.sp-tags{list-style:none;display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+.sp-notes{margin:16px 0 0;padding-left:0;list-style:none;display:grid;gap:8px;font-size:.88rem;color:var(--ink-2)}
+.sp-notes li{display:flex;gap:10px;align-items:flex-start}
+.sp-notes b{display:inline-grid;place-items:center;flex:none;width:22px;height:22px;border-radius:50%;background:var(--ink);color:#fff;font-size:.72rem}
+.sp-foot{margin-top:14px;font-size:.78rem;color:var(--ink-3)}
+
+/* ---------- What "free" means ---------- */
+.labels{background:var(--surface);border-block:1px solid var(--line)}
+.label-grid{display:grid;gap:18px}
+@media (min-width:820px){.label-grid{grid-template-columns:repeat(3,1fr)}}
+.label-card{padding:22px;border-radius:var(--radius);background:var(--paper);border:1px solid var(--line)}
+.label-card h3{font-size:1.2rem;margin:14px 0 8px}
+.label-card p{color:var(--ink-2);font-size:.95rem}
+.label-example{margin-top:22px;padding:16px 18px;border-radius:14px;background:var(--teal-soft);color:#0B4B44;font-size:.95rem;display:flex;gap:12px;align-items:flex-start}
+
+/* ---------- Cards (reusable course card) ---------- */
+.filters{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:22px}
+.chip{border:1.5px solid var(--line-2);background:var(--surface);border-radius:999px;padding:.5em 1em;font-weight:700;font-size:.86rem;cursor:pointer;transition:all .2s}
+.chip:hover{border-color:var(--ink)}
+.chip[aria-pressed="true"]{background:var(--sec,var(--ink));border-color:var(--sec,var(--ink));color:#fff}
+.grid{display:grid;gap:20px;grid-template-columns:repeat(auto-fill,minmax(min(100%,320px),1fr))}
+.card{display:flex;flex-direction:column;gap:14px;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:22px;box-shadow:var(--shadow-1);transition:transform .25s var(--ease),box-shadow .25s var(--ease),border-color .25s}
+.card:hover{transform:translateY(-3px);box-shadow:var(--shadow-2);border-color:var(--line-2)}
+.card-head{display:flex;gap:12px;align-items:center}
+.card-head .logo-slot{width:46px;height:46px;border-radius:14px}
+.provider{font-size:.8rem;font-weight:700;color:var(--ink-3)}
+.card h3{font-size:1.18rem}
+.card .desc{color:var(--ink-2);font-size:.94rem}
+.facts{display:grid;gap:10px;margin:0;font-size:.88rem}
+.facts div{display:grid;grid-template-columns:92px 1fr;gap:10px;align-items:start}
+.facts dt{font-weight:800;color:var(--ink-3);font-size:.75rem;letter-spacing:.06em;text-transform:uppercase;padding-top:.2em}
+.facts dd{margin:0;color:var(--ink-2)}
+.facts dd .tag{margin-right:6px;margin-bottom:4px}
+details.steps{border-top:1px solid var(--line);padding-top:12px}
+details.steps summary{cursor:pointer;font-weight:800;font-size:.9rem;display:flex;align-items:center;gap:8px;list-style:none}
+details.steps summary::-webkit-details-marker{display:none}
+details.steps summary::after{content:"+";margin-left:auto;font-size:1.2rem;line-height:1;color:var(--ink-3);transition:transform .2s}
+details.steps[open] summary::after{content:"–"}
+details.steps ol{margin:12px 0 0 1.2em;display:grid;gap:8px;color:var(--ink-2);font-size:.9rem}
+.verify{display:flex;gap:10px;align-items:flex-start;font-size:.8rem;padding:10px 12px;border-radius:12px;background:var(--paper)}
+.verify .dot{width:9px;height:9px;border-radius:50%;margin-top:.4em;flex:none;background:var(--ink-3)}
+.verify-verified .dot{background:var(--teal)} .verify-partial .dot{background:#D79A00}
+.verify-unverified .dot{background:var(--ink-3)} .verify-expired .dot{background:#B3261E}
+.verify strong{display:block;font-size:.82rem}
+.verify span{color:var(--ink-3)}
+.card-foot{margin-top:auto;display:flex;gap:10px;flex-wrap:wrap;padding-top:4px}
+.empty{grid-column:1/-1;text-align:center;padding:40px 20px;border:1.5px dashed var(--line-2);border-radius:var(--radius);color:var(--ink-2);background:var(--surface)}
+.empty strong{display:block;font-family:var(--font-display);font-size:1.25rem;margin-bottom:6px;color:var(--ink)}
+
+/* ---------- Internships (ticket template) ---------- */
+.internships{--sec:var(--terra);background:linear-gradient(180deg,var(--terra-soft) 0,#FDF1EB 100%)}
+.tickets{display:grid;gap:22px}
+@media (min-width:980px){.tickets{grid-template-columns:1fr 1fr}}
+.ticket{position:relative;display:grid;background:var(--surface);border:1px solid #EBCDBE;border-radius:20px;overflow:hidden;box-shadow:var(--shadow-1)}
+@media (min-width:560px){.ticket{grid-template-columns:150px 1fr}}
+.ticket-stub{padding:20px;background:var(--terra);color:#fff;display:flex;flex-direction:column;gap:10px;justify-content:space-between;position:relative}
+@media (min-width:560px){.ticket-stub{border-right:2px dashed rgba(255,255,255,.55)}
+  .ticket-stub::before,.ticket-stub::after{content:"";position:absolute;right:-11px;width:20px;height:20px;border-radius:50%;background:#FDF1EB}
+  .ticket-stub::before{top:-10px}.ticket-stub::after{bottom:-10px}}
+.ticket-stub .eyebrow{color:rgba(255,255,255,.85)}
+.ticket-stub .when{font:600 1.05rem/1.25 var(--font-display)}
+.ticket-stub .status{align-self:flex-start;background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.45);padding:.3em .7em;border-radius:999px;font-weight:800;font-size:.72rem}
+.ticket-body{padding:22px;display:flex;flex-direction:column;gap:14px}
+.ticket-body h3{font-size:1.3rem}
+.ticket-org{font-weight:700;color:var(--terra);font-size:.85rem}
+.t-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px 18px;margin:0}
+.t-grid div{min-width:0}
+.t-grid dt{font:800 .7rem/1 var(--font-body);letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);margin-bottom:4px}
+.t-grid dd{margin:0;font-size:.9rem;color:var(--ink-2)}
+
+/* ---------- Directory tiles ---------- */
+.directory{background:var(--paper-2)}
+.tiles{display:grid;gap:16px;grid-template-columns:repeat(auto-fill,minmax(min(100%,340px),1fr))}
+.tile{position:relative;display:flex;flex-direction:column;gap:10px;min-height:190px;padding:24px;border-radius:22px;text-decoration:none;background:var(--surface);border:1px solid var(--line);overflow:hidden;transition:transform .25s var(--ease),box-shadow .25s var(--ease)}
+.tile::before{content:"";position:absolute;right:-40px;top:-40px;width:150px;height:150px;border-radius:50%;background:var(--t-soft);transition:transform .4s var(--ease)}
+.tile:hover{transform:translateY(-4px);box-shadow:var(--shadow-2)}
+.tile:hover::before{transform:scale(1.25)}
+.tile > *{position:relative}
+.tile .num{font:600 .8rem var(--font-mono);color:var(--t)}
+.tile h3{font-size:1.4rem}
+.tile p{color:var(--ink-2);font-size:.93rem;max-width:34ch}
+.tile .go{margin-top:auto;display:inline-flex;align-items:center;gap:.5em;font-weight:800;color:var(--t);font-size:.9rem}
+.tile .go .i{transition:transform .2s}
+.tile:hover .go .i{transform:translateX(4px)}
+
+/* ---------- Projects ---------- */
+.projects{--sec:var(--marigold);background:var(--marigold-soft)}
+.pcard{background:var(--surface);border-color:#EBD59A}
+.meter{display:flex;gap:4px;align-items:center}
+.meter i{width:22px;height:6px;border-radius:3px;background:var(--line-2)}
+.meter i.on{background:var(--marigold)}
+.meter span{font-size:.78rem;font-weight:800;margin-left:6px;color:var(--ink-2)}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.pcard ul.outcomes{margin:10px 0 0 1.1em;color:var(--ink-2);font-size:.9rem;display:grid;gap:4px}
+
+/* ---------- GitHub live ---------- */
+.repos{--sec:var(--graphite);background:var(--graphite-soft)}
+.rcard{background:var(--surface);border-color:#D2D8E1}
+.rcard h3{font:500 1rem var(--font-mono);word-break:break-word}
+.rcard h3 a{text-decoration:none}
+.rcard h3 a:hover{text-decoration:underline}
+.stats{display:flex;flex-wrap:wrap;gap:14px;font:500 .8rem var(--font-mono);color:var(--ink-2)}
+.stats span{display:inline-flex;align-items:center;gap:.4em}
+.skeleton{position:relative;overflow:hidden;background:#E9EDF2;border-radius:8px;min-height:14px}
+.skeleton::after{content:"";position:absolute;inset:0;transform:translateX(-100%);background:linear-gradient(90deg,transparent,rgba(255,255,255,.7),transparent);animation:shimmer 1.3s infinite}
+@keyframes shimmer{to{transform:translateX(100%)}}
+html[data-motion="reduced"] .skeleton::after{animation:none}
+@media (prefers-reduced-motion:reduce){.skeleton::after{animation:none}}
+.live-bar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-bottom:20px}
+
+/* ---------- Resources ---------- */
+.resources{--sec:var(--sky)}
+.rlist{display:grid;gap:14px;grid-template-columns:repeat(auto-fill,minmax(min(100%,250px),1fr))}
+.rlink{display:flex;flex-direction:column;gap:8px;padding:18px;border:1px solid var(--line);border-radius:16px;background:var(--surface);text-decoration:none;transition:transform .2s var(--ease),border-color .2s}
+.rlink:hover{transform:translateY(-3px);border-color:var(--sky)}
+.rlink strong{display:flex;gap:8px;align-items:center;justify-content:space-between;font-size:1rem}
+.rlink p{font-size:.88rem;color:var(--ink-2)}
+
+/* ---------- Verify + feedback ---------- */
+.verify-sec{background:var(--surface);border-top:1px solid var(--line)}
+.two-col{display:grid;gap:clamp(24px,4vw,56px)}
+@media (min-width:960px){.two-col{grid-template-columns:1.15fr .85fr}}
+.legend{display:grid;gap:10px;margin-top:18px}
+.legend li{list-style:none;display:flex;gap:12px;align-items:flex-start;font-size:.92rem;color:var(--ink-2)}
+.legend .verify{padding:0;background:none}
+.table-wrap{overflow-x:auto;margin-top:22px;border:1px solid var(--line);border-radius:14px}
+table{width:100%;border-collapse:collapse;font-size:.86rem;min-width:520px}
+caption{text-align:left;padding:12px 14px;font-weight:800;border-bottom:1px solid var(--line);background:var(--paper)}
+th,td{padding:10px 14px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3)}
+tr:last-child td{border-bottom:0}
+.form{display:grid;gap:14px;background:var(--paper);border:1px solid var(--line);border-radius:22px;padding:clamp(18px,3vw,28px)}
+.field{display:grid;gap:6px}
+.field label{font-weight:800;font-size:.86rem}
+.field input,.field select,.field textarea{width:100%;border:1.5px solid var(--line-2);border-radius:12px;padding:.7em .9em;background:var(--surface)}
+.field textarea{min-height:110px;resize:vertical}
+.field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:var(--ink);box-shadow:0 0 0 3px rgba(43,108,176,.25)}
+.field .hint{font-size:.8rem;color:var(--ink-3)}
+.field .err{font-size:.82rem;color:#B3261E;font-weight:700;min-height:1.2em}
+.form-status{padding:12px 14px;border-radius:12px;font-size:.9rem;background:var(--sky-soft);color:#1D4E85}
+.form-status[hidden]{display:none}
+
+/* ---------- Footer ---------- */
+.site-footer{background:var(--ink);color:#E9E5DC;padding:clamp(48px,7vw,80px) 0 28px}
+.foot-grid{display:grid;gap:36px}
+@media (min-width:900px){.foot-grid{grid-template-columns:1.4fr repeat(4,1fr)}}
+.foot-brand .brand{color:#fff}
+.foot-brand p{margin-top:14px;color:#BDB8AC;font-size:.92rem;max-width:34ch}
+.site-footer h4{font:800 .72rem/1 var(--font-body);letter-spacing:.14em;text-transform:uppercase;color:#9A9588;margin-bottom:16px}
+.site-footer ul{list-style:none;display:grid;gap:10px;font-size:.92rem}
+.site-footer a{text-decoration:none;color:#E9E5DC}
+.site-footer a:hover{text-decoration:underline}
+.ph{display:inline-block;border:1px dashed #6A6759;border-radius:8px;padding:.15em .6em;font-size:.8rem;color:#BDB8AC}
+.social{display:flex;gap:8px;flex-wrap:wrap;margin-top:18px}
+.social a,.social span{display:inline-flex;align-items:center;height:34px;padding:0 12px;border-radius:999px;border:1px solid #4A4F58;font-size:.8rem;font-weight:700}
+.social span{border-style:dashed;color:#9A9588}
+.foot-bottom{margin-top:44px;padding-top:22px;border-top:1px solid #353B45;display:flex;flex-wrap:wrap;gap:12px 24px;justify-content:space-between;font-size:.84rem;color:#BDB8AC}
+.foot-bottom nav{display:flex;gap:18px;flex-wrap:wrap}
+.foot-bottom button{background:none;border:0;padding:0;color:#E9E5DC;cursor:pointer;text-decoration:underline;font-size:inherit}
+.foot-disclaimer{margin-top:18px;font-size:.8rem;color:#9A9588;max-width:90ch}
+
+/* ---------- Dialog + toast ---------- */
+dialog{border:0;border-radius:22px;padding:0;max-width:min(640px,calc(100vw - 24px));width:100%;box-shadow:0 30px 80px rgba(22,32,44,.35);color:var(--ink)}
+dialog::backdrop{background:rgba(22,32,44,.5);-webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px)}
+.dlg-head{display:flex;justify-content:space-between;align-items:center;padding:18px 22px;border-bottom:1px solid var(--line)}
+.dlg-head h2{font-size:1.35rem}
+.dlg-body{padding:20px 22px 26px;max-height:62vh;overflow:auto;display:grid;gap:12px;font-size:.94rem;color:var(--ink-2)}
+.dlg-body h3{font-size:1.05rem;color:var(--ink);margin-top:6px}
+.draft{padding:10px 12px;background:var(--marigold-soft);border-radius:10px;font-size:.85rem;color:#6B4400;font-weight:600}
+.toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,20px);opacity:0;pointer-events:none;z-index:90;background:var(--ink);color:#fff;padding:.7em 1.2em;border-radius:999px;font-weight:700;font-size:.9rem;box-shadow:var(--shadow-2);transition:all .3s var(--ease)}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+
+/* ---------- Reveal-on-scroll (restrained) ---------- */
+html.js .reveal{opacity:0;transform:translateY(16px);transition:opacity .6s var(--ease),transform .6s var(--ease)}
+html.js .reveal.in{opacity:1;transform:none}
+html[data-motion="reduced"] .reveal{opacity:1!important;transform:none!important;transition:none}
+@media (prefers-reduced-motion:reduce){html.js .reveal{opacity:1;transform:none;transition:none}.card,.tile,.btn,.rlink{transition:none}}
+noscript .nojs{max-width:760px;margin:120px auto 0;padding:16px 20px;border:1px solid var(--line-2);border-radius:14px;background:var(--surface)}
+</style>
+</head>
+
+<body>
+<a class="skip-link" href="#main">Skip to main content</a>
+
+<!-- ICON SPRITE (shared by every page) -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <symbol id="i-dots" viewBox="0 0 24 24"><circle cx="5" cy="12" r="1.7" fill="currentColor" stroke="none"/><circle cx="12" cy="12" r="1.7" fill="currentColor" stroke="none"/><circle cx="19" cy="12" r="1.7" fill="currentColor" stroke="none"/></symbol>
+  <symbol id="i-back" viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></symbol>
+  <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></symbol>
+  <symbol id="i-ext" viewBox="0 0 24 24"><path d="M7 17 17 7M8 7h9v9"/></symbol>
+  <symbol id="i-star" viewBox="0 0 24 24"><path d="m12 3 2.9 6 6.6.8-4.9 4.5L18 21l-6-3.4L6 21l1.4-6.7L2.5 9.8 9.1 9z"/></symbol>
+  <symbol id="i-fork" viewBox="0 0 24 24"><circle cx="6" cy="5" r="2"/><circle cx="18" cy="5" r="2"/><circle cx="12" cy="19" r="2"/><path d="M6 7v3a3 3 0 0 0 3 3h6a3 3 0 0 0 3-3V7M12 13v4"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+  <symbol id="i-image" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="1.6"/><path d="m21 16-5-5-8 8"/></symbol>
+  <symbol id="i-copy" viewBox="0 0 24 24"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V6a2 2 0 0 1 2-2h9"/></symbol>
+  <symbol id="i-up" viewBox="0 0 24 24"><path d="M12 19V5M5 12l7-7 7 7"/></symbol>
+  <symbol id="i-motion" viewBox="0 0 24 24"><path d="M3 8h11a3 3 0 1 0-3-3M3 12h16a3 3 0 1 1-3 3M3 16h8"/></symbol>
+  <symbol id="i-flag" viewBox="0 0 24 24"><path d="M5 21V4M5 4h12l-2 4 2 4H5"/></symbol>
+  <symbol id="i-refresh" viewBox="0 0 24 24"><path d="M20 11a8 8 0 0 0-14.9-3M4 5v4h4M4 13a8 8 0 0 0 14.9 3M20 19v-4h-4"/></symbol>
+</svg>
+
+<!-- =========================== NAVBAR =========================== -->
+<header class="nav-wrap" id="siteNav">
+  <nav class="nav" aria-label="Primary">
+    <button class="icon-btn" id="backBtn" type="button" hidden aria-label="Go back to the previous page"><svg class="i"><use href="#i-back"/></svg></button>
+    <a class="brand" href="index.html" aria-label="Today Skills — home">
+      <span class="logo-slot" data-logo-slot></span>
+      <span class="brand-name">Today Skills</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="courses.html">Courses</a></li>
+      <li><a href="internships.html">Internships</a></li>
+      <li><a href="portfolios.html">Portfolios</a></li>
+      <li><a href="github-repos.html">GitHub</a></li>
+      <li><a href="project-ideas.html">Projects</a></li>
+      <li><a href="resources.html">Resources</a></li>
+    </ul>
+    <a class="btn btn-teal btn-sm nav-cta" href="courses.html">Explore Courses</a>
+    <button class="icon-btn" id="moreBtn" type="button" aria-haspopup="menu" aria-expanded="false" aria-controls="moreMenu" aria-label="More options"><svg class="i"><use href="#i-dots"/></svg></button>
+
+    <div class="menu" id="moreMenu" role="menu" aria-label="More options" hidden>
+      <div class="menu-group" role="none">
+        <div class="menu-label" role="presentation">On this page</div>
+        <a class="menu-item" role="menuitem" href="#labels">What “free” means</a>
+        <a class="menu-item" role="menuitem" href="#course-highlights">Course highlights</a>
+        <a class="menu-item" role="menuitem" href="#internship-highlights">Internship highlights</a>
+        <a class="menu-item" role="menuitem" href="#projects">Featured project ideas</a>
+        <a class="menu-item" role="menuitem" href="#repos">Live GitHub repositories</a>
+        <a class="menu-item" role="menuitem" href="#verify">How we verify</a>
+      </div>
+      <div class="menu-group" role="none">
+        <div class="menu-label" role="presentation">Sections</div>
+        <a class="menu-item" role="menuitem" href="courses.html"><span class="swatch" style="--c:var(--teal)"></span>Free Certified Courses</a>
+        <a class="menu-item" role="menuitem" href="internships.html"><span class="swatch" style="--c:var(--terra)"></span>Internships</a>
+        <a class="menu-item" role="menuitem" href="portfolios.html"><span class="swatch" style="--c:var(--plum)"></span>Portfolio Inspiration</a>
+        <a class="menu-item" role="menuitem" href="github-repos.html"><span class="swatch" style="--c:var(--graphite)"></span>GitHub Repositories</a>
+        <a class="menu-item" role="menuitem" href="project-ideas.html"><span class="swatch" style="--c:var(--marigold)"></span>Project Ideas</a>
+        <a class="menu-item" role="menuitem" href="resources.html"><span class="swatch" style="--c:var(--sky)"></span>Additional Resources</a>
+      </div>
+      <div class="menu-group" role="none">
+        <div class="menu-label" role="presentation">Options</div>
+        <button class="menu-item" role="menuitemcheckbox" aria-checked="false" id="motionToggle" type="button"><svg class="i"><use href="#i-motion"/></svg>Reduce motion<span class="state" id="motionState">off</span></button>
+        <button class="menu-item" role="menuitem" id="copyLink" type="button"><svg class="i"><use href="#i-copy"/></svg>Copy page link</button>
+        <a class="menu-item" role="menuitem" href="#feedback"><svg class="i"><use href="#i-flag"/></svg>Report a broken link or suggest an addition</a>
+        <button class="menu-item" role="menuitem" id="toTop" type="button"><svg class="i"><use href="#i-up"/></svg>Back to top</button>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<noscript><p class="nojs">Today Skills uses JavaScript for its listings, filters and live GitHub data. Please enable it, or open the official links directly from each section page.</p></noscript>
+
+<main id="main">
+
+<!-- =========================== HERO =========================== -->
+<section class="hero" aria-labelledby="hero-title">
+  <div class="container hero-grid">
+    <div class="reveal">
+      <p class="eyebrow">Free learning · Internships · Portfolio resources</p>
+      <h1 id="hero-title">Free learning, with the <em>fine print</em> up front.</h1>
+      <p class="sub">Courses, internships, portfolios and open-source projects — each listed with what is actually free, what isn’t, and the date we last checked the official page.</p>
+      <div class="hero-cta">
+        <a class="btn btn-teal" href="courses.html">Explore Courses <svg class="i"><use href="#i-arrow"/></svg></a>
+        <a class="btn btn-terra" href="internships.html">Explore Internships <svg class="i"><use href="#i-arrow"/></svg></a>
+        <a class="btn btn-ghost" href="#verify">How we verify</a>
+      </div>
+      <p class="hero-note"><svg class="i"><use href="#i-clock"/></svg><span>Latest check on this page: <strong id="heroLastChecked">—</strong></span></p>
+    </div>
+
+    <figure class="specimen reveal" aria-label="Illustrative example of how each listing states its terms" style="margin:0">
+      <span class="eyebrow" style="--sec:var(--ink-3)">How every listing reads</span>
+      <div class="sp-card">
+        <div class="sp-row">
+          <span class="logo-slot"><span class="logo-ph"><svg class="i"><use href="#i-image"/></svg></span></span>
+          <div><small>Provider name</small><strong>Course title</strong></div>
+        </div>
+        <ul class="sp-tags" aria-label="Example labels">
+          <li class="tag tag-free"><b>1</b>Free to enroll</li>
+          <li class="tag tag-cond"><b>2</b>Paid certificate</li>
+          <li class="tag tag-info"><b>3</b>Checked on a stated date</li>
+        </ul>
+      </div>
+      <ol class="sp-notes">
+        <li><b>1</b><span>Enrollment cost is stated on its own.</span></li>
+        <li><b>2</b><span>Certificate cost and conditions are stated separately, so “free course” never hides a paid certificate.</span></li>
+        <li><b>3</b><span>Every entry carries the date it was last checked against an official source.</span></li>
+      </ol>
+      <p class="sp-foot">Illustration only — not a real listing.</p>
+    </figure>
+  </div>
+</section>
+
+<!-- =========================== WHAT FREE MEANS =========================== -->
+<section class="labels band" id="labels" aria-labelledby="labels-title" style="--sec:var(--teal)">
+  <div class="container">
+    <div class="sec-head reveal">
+      <div class="lede">
+        <p class="eyebrow">Reading the labels</p>
+        <h2 id="labels-title">“Free” can mean three different things.</h2>
+        <p>Many programs are free to learn from but charge for the certificate. We keep those two facts apart on every card.</p>
+      </div>
+    </div>
+    <div class="label-grid">
+      <article class="label-card reveal"><span class="tag tag-free">Free to enroll</span><h3>You can start without paying</h3><p>Lessons and materials are open at no cost. This says nothing yet about the certificate.</p></article>
+      <article class="label-card reveal"><span class="tag tag-free">Free certificate</span><h3>The credential costs nothing</h3><p>You can earn the certificate or digital credential without paying, once you meet the stated requirements.</p></article>
+      <article class="label-card reveal"><span class="tag tag-cond">Free with conditions</span><h3>There is a catch to check</h3><p>For example a proctored exam fee, an application for financial aid, a regional limit or a sign-up window.</p></article>
+    </div>
+    <p class="label-example reveal"><svg class="i" style="margin-top:.2em"><use href="#i-check"/></svg><span><strong>A real example:</strong> NPTEL courses are free to join and learn from, but the certificate needs an optional, paid, proctored exam. That is why NPTEL is labelled “free to enroll” and “paid exam for certificate”.</span></p>
+  </div>
+</section>
+
+<!-- =========================== COURSE HIGHLIGHTS =========================== -->
+<section class="band" id="course-highlights" aria-labelledby="ch-title" style="--sec:var(--teal)">
+  <div class="container">
+    <div class="sec-head reveal">
+      <div class="lede">
+        <p class="eyebrow">Free certified courses</p>
+        <h2 id="ch-title">Course highlights</h2>
+        <p>A short selection from official providers. The full, searchable list lives on the courses page.</p>
+      </div>
+      <span class="stamp"><svg class="i"><use href="#i-clock"/></svg><span>Last checked <span data-latest-checked="courses">—</span></span></span>
+    </div>
+    <div class="filters reveal" role="group" aria-label="Filter course highlights" id="courseFilters"></div>
+    <p class="sr-only" id="courseCount" aria-live="polite"></p>
+    <div class="grid" id="courseGrid" aria-live="polite"></div>
+    <div style="margin-top:28px;display:flex;gap:12px;flex-wrap:wrap" class="reveal">
+      <a class="btn btn-teal" href="courses.html">Explore Courses <svg class="i"><use href="#i-arrow"/></svg></a>
+    </div>
+  </div>
+</section>
+
+<!-- =========================== INTERNSHIP HIGHLIGHTS =========================== -->
+<section class="internships band" id="internship-highlights" aria-labelledby="ih-title">
+  <div class="container">
+    <div class="sec-head reveal">
+      <div class="lede">
+        <p class="eyebrow">Internships &amp; programmes</p>
+        <h2 id="ih-title">Internship highlights</h2>
+        <p>Programmes with a published application process. Deadlines move every year, so each ticket shows what was confirmed and what still needs checking.</p>
+      </div>
+      <span class="stamp"><svg class="i"><use href="#i-clock"/></svg><span>Last checked <span data-latest-checked="internships">—</span></span></span>
+    </div>
+    <div class="tickets" id="ticketGrid"></div>
+    <div style="margin-top:28px" class="reveal">
+      <a class="btn btn-terra" href="internships.html">Explore Internships <svg class="i"><use href="#i-arrow"/></svg></a>
+    </div>
+  </div>
+</section>
+
+<!-- =========================== DIRECTORY =========================== -->
+<section class="directory band" id="sections" aria-labelledby="dir-title">
+  <div class="container">
+    <div class="sec-head reveal">
+      <div class="lede">
+        <p class="eyebrow">Explore by section</p>
+        <h2 id="dir-title">Six places to go next</h2>
+        <p>Each section has its own look, and the same cards, navigation and labels throughout.</p>
+      </div>
+    </div>
+    <div class="tiles" id="tiles"></div>
+  </div>
+</section>
+
+<!-- =========================== FEATURED PROJECT IDEAS =========================== -->
+<section class="projects band" id="projects" aria-labelledby="pr-title">
+  <div class="container">
+    <div class="sec-head reveal">
+      <div class="lede">
+        <p class="eyebrow">Project ideas</p>
+        <h2 id="pr-title">Featured project ideas</h2>
+        <p>Portfolio-sized projects with the skills they teach and a first step to begin with. These are ideas to build, not finished work by Today Skills.</p>
+      </div>
+    </div>
+    <div class="grid" id="projectGrid"></div>
+    <div style="margin-top:28px" class="reveal">
+      <a class="btn btn-marigold" href="project-ideas.html">More project ideas <svg class="i"><use href="#i-arrow"/></svg></a>
+    </div>
+  </div>
+</section>
+
+<!-- =========================== LIVE GITHUB =========================== -->
+<section class="repos band" id="repos" aria-labelledby="gh-title">
+  <div class="container">
+    <div class="sec-head reveal">
+      <div class="lede">
+        <p class="eyebrow">GitHub repositories</p>
+        <h2 id="gh-title">Useful repositories, live numbers</h2>
+        <p>Stars, forks and last-update dates are fetched from GitHub when you open this page, so they are never typed in by hand.</p>
+      </div>
+    </div>
+    <div class="live-bar reveal">
+      <button class="btn btn-ghost btn-sm" id="refreshRepos" type="button"><svg class="i"><use href="#i-refresh"/></svg>Refresh</button>
+      <span class="stamp" id="repoStamp" aria-live="polite">Loading from GitHub…</span>
+    </div>
+    <div class="grid" id="repoGrid" aria-live="polite" aria-busy="true"></div>
+    <div style="margin-top:28px" class="reveal">
+      <a class="btn btn-graphite" href="github-repos.html">Browse GitHub repositories <svg class="i"><use href="#i-arrow"/></svg></a>
+    </div>
+  </div>
+</section>
+
+<!-- =========================== RESOURCE PREVIEW =========================== -->
+<section class="resources band" id="resources" aria-labelledby="rs-title">
+  <div class="container">
+    <div class="sec-head reveal">
+      <div class="lede">
+        <p class="eyebrow">Additional resources</p>
+        <h2 id="rs-title">Tools worth bookmarking</h2>
+        <p>A small preview of the resources page. Links marked “not yet checked” have not been re-verified by us.</p>
+      </div>
+    </div>
+    <div class="rlist" id="resourceGrid"></div>
+    <div style="margin-top:28px" class="reveal">
+      <a class="btn btn-sky" href="resources.html">All resources <svg class="i"><use href="#i-arrow"/></svg></a>
+    </div>
+  </div>
+</section>
+
+<!-- =========================== VERIFY + FEEDBACK =========================== -->
+<section class="verify-sec band" id="verify" aria-labelledby="vf-title">
+  <div class="container two-col">
+    <div class="reveal">
+      <p class="eyebrow" style="--sec:var(--teal)">How we verify</p>
+      <h2 id="vf-title" style="font-size:clamp(1.8rem,3.4vw,2.6rem);margin-top:10px;max-width:18ch">Every listing shows its checking status.</h2>
+      <p style="color:var(--ink-2);margin-top:12px;max-width:56ch">We compare each entry with the provider’s own pages where we can and say so when we can’t. We don’t invent certificates, partnerships or statistics. Always confirm terms on the official page before you enroll or apply.</p>
+      <ul class="legend">
+        <li><span class="verify verify-verified"><span class="dot"></span></span><span><strong>Checked against official source</strong> — key terms were confirmed on the provider’s own page on the date shown.</span></li>
+        <li><span class="verify verify-partial"><span class="dot"></span></span><span><strong>Partly verified</strong> — some details came from secondary sources or older official pages. Confirm before relying on them.</span></li>
+        <li><span class="verify verify-unverified"><span class="dot"></span></span><span><strong>Not yet verified</strong> — listed for convenience; we have not re-checked it.</span></li>
+        <li><span class="verify verify-expired"><span class="dot"></span></span><span><strong>Expired or closed</strong> — kept visible so you know it is no longer available.</span></li>
+      </ul>
+      <div class="table-wrap">
+        <table>
+          <caption>Verification log (generated from the data on this page)</caption>
+          <thead><tr><th scope="col">Entry</th><th scope="col">Type</th><th scope="col">Status</th><th scope="col">Checked</th></tr></thead>
+          <tbody id="logBody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="reveal" id="feedback">
+      <form class="form" id="feedbackForm" novalidate aria-labelledby="fb-title">
+        <div><p class="eyebrow" style="--sec:var(--sky)">Help keep this accurate</p><h3 id="fb-title" style="font-size:1.5rem;margin-top:8px">Report a broken link or suggest an addition</h3></div>
+        <div class="field">
+          <label for="fbType">What is this about?</label>
+          <select id="fbType" name="type" required>
+            <option value="">Choose one…</option>
+            <option>Broken or changed link</option>
+            <option>Outdated course or internship details</option>
+            <option>Suggest a course or internship</option>
+            <option>Suggest a resource or repository</option>
+            <option>Something else</option>
+          </select>
+          <span class="err" data-err="type" aria-live="polite"></span>
+        </div>
+        <div class="field">
+          <label for="fbUrl">Link (optional)</label>
+          <input id="fbUrl" name="url" type="url" inputmode="url" placeholder="https://">
+          <span class="err" data-err="url" aria-live="polite"></span>
+        </div>
+        <div class="field">
+          <label for="fbMsg">Details</label>
+          <textarea id="fbMsg" name="message" required minlength="10" placeholder="What should we look at or change?"></textarea>
+          <span class="err" data-err="message" aria-live="polite"></span>
+        </div>
+        <button class="btn btn-sky" type="submit" id="fbSubmit">Send</button>
+        <div class="form-status" id="fbStatus" role="status" hidden></div>
+        <p class="hint" style="font-size:.8rem;color:var(--ink-3)">Nothing is sent until a destination is set in <code>BRAND</code> (see the script at the bottom of this file).</p>
+      </form>
+    </div>
+  </div>
+</section>
+</main>
+
+<!-- =========================== FOOTER =========================== -->
+<footer class="site-footer">
+  <div class="container">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <a class="brand" href="index.html" aria-label="Today Skills — home"><span class="logo-slot" data-logo-slot></span><span class="brand-name">Today Skills</span></a>
+        <p>A guide to free courses, internships, portfolios and project ideas, with the terms and the last-checked date shown on every listing.</p>
+        <div class="social" id="socialRow" aria-label="Social links"></div>
+      </div>
+      <div><h4>Explore</h4><ul>
+        <li><a href="courses.html">Free Certified Courses</a></li>
+        <li><a href="internships.html">Internships</a></li>
+        <li><a href="portfolios.html">Portfolio Inspiration</a></li>
+        <li><a href="github-repos.html">GitHub Repositories</a></li>
+        <li><a href="project-ideas.html">Project Ideas</a></li>
+        <li><a href="resources.html">Additional Resources</a></li></ul></div>
+      <div><h4>Course categories</h4><ul>
+        <li><a href="courses.html?category=programming">Programming &amp; web</a></li>
+        <li><a href="courses.html?category=data-ai">Data &amp; AI</a></li>
+        <li><a href="courses.html?category=career">Career &amp; IT</a></li>
+        <li><a href="courses.html?category=engineering">Engineering &amp; science</a></li></ul></div>
+      <div><h4>Internship categories</h4><ul>
+        <li><a href="internships.html?type=open-source">Open source</a></li>
+        <li><a href="internships.html?mode=remote">Remote</a></li>
+        <li><a href="internships.html?pay=paid">Paid stipend</a></li>
+        <li><a href="internships.html?pay=unpaid">Unpaid / certificate-based</a></li></ul></div>
+      <div><h4>Contact</h4><ul id="contactList"></ul></div>
+    </div>
+    <p class="foot-disclaimer">Today Skills is an independent directory. Unless a listing says otherwise, we are not affiliated with, endorsed by or partnered with the providers mentioned, and all names and logos belong to their owners. Terms, fees, dates and eligibility change — confirm everything on the official page before you enroll or apply.</p>
+    <div class="foot-bottom">
+      <span>© <span id="year">2026</span> Today Skills. All rights reserved.</span>
+      <nav aria-label="Legal">
+        <button type="button" data-dialog="dlgPrivacy">Privacy policy</button>
+        <button type="button" data-dialog="dlgTerms">Terms of use</button>
+        <button type="button" data-dialog="dlgDisclaimer">Disclaimer</button>
+      </nav>
+    </div>
+  </div>
+</footer>
+
+<!-- =========================== LEGAL DIALOGS =========================== -->
+<dialog id="dlgPrivacy" aria-labelledby="dlgPrivacyT">
+  <div class="dlg-head"><h2 id="dlgPrivacyT">Privacy policy</h2><button class="icon-btn" type="button" data-close aria-label="Close privacy policy">✕</button></div>
+  <div class="dlg-body">
+    <p class="draft">Draft template — have it reviewed and completed before you publish the site.</p>
+    <h3>What this page does in your browser</h3>
+    <p>This page stores two things on your device only: your “reduce motion” choice, and a short-lived cache of public GitHub repository data so the page doesn’t re-request it on every visit. Neither is sent to us.</p>
+    <h3>Third-party requests</h3>
+    <p>The page loads fonts from Google Fonts and, in the GitHub section, reads public repository data from api.github.com. Those services receive your IP address and browser details under their own policies.</p>
+    <h3>The feedback form</h3>
+    <p>Details you type into the feedback form are used only to review the report. Add your real contact route and retention rules here once a destination is configured.</p>
+    <h3>Contact</h3>
+    <p>Add the privacy contact details for the organisation here.</p>
+  </div>
+</dialog>
+<dialog id="dlgTerms" aria-labelledby="dlgTermsT">
+  <div class="dlg-head"><h2 id="dlgTermsT">Terms of use</h2><button class="icon-btn" type="button" data-close aria-label="Close terms of use">✕</button></div>
+  <div class="dlg-body">
+    <p class="draft">Draft template — have it reviewed and completed before you publish the site.</p>
+    <h3>Use of this site</h3>
+    <p>The site is provided for general information. You use the listed courses, internships and resources at your own discretion and subject to each provider’s own terms.</p>
+    <h3>Links to other sites</h3>
+    <p>Links lead to sites we do not control. We are not responsible for their content, availability or terms.</p>
+    <h3>Changes</h3>
+    <p>Content may be updated or removed at any time. Add the governing law, ownership of content and any acceptable-use rules for the organisation here.</p>
+  </div>
+</dialog>
+<dialog id="dlgDisclaimer" aria-labelledby="dlgDisclaimerT">
+  <div class="dlg-head"><h2 id="dlgDisclaimerT">Disclaimer</h2><button class="icon-btn" type="button" data-close aria-label="Close disclaimer">✕</button></div>
+  <div class="dlg-body">
+    <h3>No affiliation</h3>
+    <p>Unless a listing explicitly says so, Today Skills is not affiliated with, endorsed by or partnered with any provider listed here. Names and logos belong to their owners.</p>
+    <h3>Accuracy</h3>
+    <p>We check listings against official sources and show the date and level of checking on each one. Fees, eligibility, deadlines, certificate rules and availability can change without notice. Confirm on the official page before you enroll or apply.</p>
+    <h3>No guarantees</h3>
+    <p>A certificate or digital credential does not guarantee a job, an internship offer or admission anywhere. Listings are not professional, legal or financial advice.</p>
+  </div>
+</dialog>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+/* ==========================================================================
+   TODAY SKILLS — index.html script
+   Sections: 1 BRAND config · 2 DATA (edit here) · 3 helpers · 4 components
+             5 nav + menu · 6 feedback form · 7 live GitHub · 8 boot
+   ========================================================================== */
+"use strict";
+
+/* ---------- 1. BRAND CONFIG — paste real values here (same block on every page) ---------- */
+const BRAND = {
+  name: "Today Skills",
+  logoUrl: "",      // ← PASTE LOGO IMAGE URL (square, ≥ 96×96 px, PNG/SVG/WebP)
+  faviconUrl: "",   // ← PASTE FAVICON IMAGE URL (PNG/SVG/ICO)
+  contact: { email: "", phone: "", address: "" },   // ← fill in real details; nothing is invented
+  social:  { linkedin: "", instagram: "", youtube: "", x: "", github: "" }, // ← full profile URLs
+  feedback: { endpoint: "", email: "" } // endpoint = a form-service URL that accepts JSON POST; email = fallback mailto
+};
+
+/* ---------- 2. DATA — every entry carries its own verification record ---------- */
+const STATUS = {
+  verified:   "Checked against official source",
+  partial:    "Partly verified — confirm on the official page",
+  unverified: "Not yet verified",
+  expired:    "Expired or closed"
+};
+
+/* Course card fields: category, provider, name, description, enrollNote, certKind(free|cond|paid), certLabel,
+   certNote, cost, eligibility, steps[], url, status, checkedOn, verifyNote, logoUrl, certPreview (optional image URL) */
+const COURSES = [
+  { id:"cs50x", cat:"programming", provider:"Harvard University · CS50", name:"CS50x: Introduction to Computer Science",
+    description:"Harvard’s introductory computer science course, taught online, with weekly problem sets that build programming and problem-solving skills.",
+    enrollNote:"Course is free to take.", certKind:"free", certLabel:"Free certificate",
+    certNote:"A free CS50 certificate is issued once you meet the course requirements. A separate verified certificate through edX is optional and paid.",
+    cost:"Course and CS50 certificate: free. Optional edX verified certificate: paid.",
+    eligibility:"Open online to anyone. Check the official FAQ for the current year’s requirements.",
+    steps:["Open the official CS50x page and read the FAQ for the current year.","Create the free accounts the course asks for.","Work through the lectures and submit each problem set as instructed.","When all requirements are met, request the free certificate from your gradebook page (as described in the official FAQ)."],
+    url:"https://cs50.harvard.edu/x/", status:"partial", checkedOn:"2026-11-01",
+    verifyNote:"Terms confirmed on official CS50 FAQ and certificate pages, but the versions seen date from 2019–2022. Confirm this year’s requirements.", logoUrl:"", certPreview:"" },
+  { id:"fcc-rwd", cat:"programming", provider:"freeCodeCamp", name:"Responsive Web Design Certification",
+    description:"Project-based certification covering semantic HTML, forms, accessibility, CSS Flexbox, CSS Grid and responsive design.",
+    enrollNote:"Free to start.", certKind:"free", certLabel:"Free certification",
+    certNote:"freeCodeCamp states its certifications are free; you sit an exam on the site to earn the verified certification.",
+    cost:"Free, including the certification exam (per freeCodeCamp’s FAQ).",
+    eligibility:"Open to everyone. Sign in on the site to save progress and claim certifications.",
+    steps:["Open freeCodeCamp’s learn page and sign in.","Choose the Responsive Web Design curriculum.","Complete the lessons and projects.","Take the certification exam on the site to earn the certification."],
+    url:"https://www.freecodecamp.org/learn/", status:"verified", checkedOn:"2026-11-01",
+    verifyNote:"Confirmed in freeCodeCamp’s own announcement of the certification (Dec 2025).", logoUrl:"", certPreview:"" },
+  { id:"nptel", cat:"engineering", provider:"NPTEL · IITs and IISc", name:"NPTEL online courses",
+    description:"University-level courses taught by IIT and IISc faculty in engineering, science, humanities and management, in 4-, 8- or 12-week formats.",
+    enrollNote:"Enrolment and learning are free.", certKind:"cond", certLabel:"Paid exam for certificate",
+    certNote:"The certificate needs an optional, in-person, proctored exam. Sources we checked put the fee at about ₹1,000 per course exam; it varies by course and semester.",
+    cost:"Course: free. Certificate: exam fee applies (about ₹1,000 per course exam in sources checked).",
+    eligibility:"No age limit or entrance criteria, according to NPTEL / IIT Madras.",
+    steps:["Open the official NPTEL site and sign in or register with a permanent email address.","Choose a course and click Enrol (free).","Watch lectures and submit the weekly assignments.","When the exam window opens, register for the proctored exam and pay the fee.","Download the hall ticket and take the exam at your allotted centre."],
+    url:"https://nptel.ac.in/", status:"verified", checkedOn:"2026-11-01",
+    verifyNote:"Free enrolment with an optional paid exam is stated in an IIT Madras press release. Exact fee, exam dates and cities change every semester.", logoUrl:"", certPreview:"" },
+  { id:"ibm-sb", cat:"career", provider:"IBM", name:"IBM SkillsBuild learning paths",
+    description:"Free online courses and learning paths in technology and professional skills, including AI, cybersecurity, data and workplace skills.",
+    enrollNote:"Free to join.", certKind:"free", certLabel:"Free digital credentials",
+    certNote:"Completing eligible learning paths earns IBM-issued digital credentials (badges). Which activities award credentials varies.",
+    cost:"Free.",
+    eligibility:"Open registration on the official site; individual programmes may set their own audience rules or sign-up windows.",
+    steps:["Open the official SkillsBuild site and register with an email address.","Browse the learning paths and pick one.","Complete the courses and any assessments in the path.","Claim the digital credential when the path shows it as earned."],
+    url:"https://skillsbuild.org/", status:"partial", checkedOn:"2026-11-01",
+    verifyNote:"Credentials confirmed on skillsbuild.org/about. “Free” comes from IBM partner pages — confirm on the official site.", logoUrl:"", certPreview:"" },
+  { id:"kaggle", cat:"data-ai", provider:"Kaggle (Google)", name:"Kaggle Learn micro-courses",
+    description:"Short, hands-on courses in Python, pandas, machine learning, data visualisation and more, run in browser notebooks.",
+    enrollNote:"Free with a Kaggle account.", certKind:"free", certLabel:"Free certificate of completion",
+    certNote:"Issued after you finish a course’s exercises. The courses are introductory and unproctored.",
+    cost:"Free.",
+    eligibility:"A free Kaggle account. Basic Python helps for some courses.",
+    steps:["Create a free Kaggle account.","Open Kaggle Learn and choose a course.","Work through the lessons and exercises in the notebooks.","Finish every exercise; the certificate then appears on your profile."],
+    url:"https://www.kaggle.com/learn", status:"partial", checkedOn:"2026-11-01",
+    verifyNote:"Details come mainly from secondary sources and public certificate pages; not confirmed against a current official Kaggle page.", logoUrl:"", certPreview:"" }
+];
+const COURSE_CATS = [["all","All"],["programming","Programming & web"],["data-ai","Data & AI"],["career","Career & IT"],["engineering","Engineering & science"]];
+
+/* Internship ticket fields: org, title, domain, mode, duration, stipend, certificate, eligibility, deadline, stateLabel, steps[], url, status, checkedOn, verifyNote */
+const INTERNSHIPS = [
+  { id:"gsoc", org:"Google Summer of Code", title:"Open-source contributor programme", domain:"Open-source software (depends on the mentoring organisation)",
+    mode:"Remote", duration:"2026 standard coding period ran from late May to late August; extended timelines were available.",
+    stipend:"Paid. The amount depends on your country of residence and project size (see the official stipend table).",
+    certificate:"Not confirmed here — check the official FAQ.", eligibility:"See the official contributor eligibility rules.",
+    deadline:"2027 dates not yet published. The 2026 contributor application window closed on 31 March (18:00 UTC).",
+    stateLabel:"Dates not announced", when:"Applications usually open in March",
+    steps:["Read the official FAQ and contributor guide.","When mentoring organisations are announced (usually February), pick one and read its contributor guidance.","Talk to the organisation and complete any pre-tasks it sets.","Write your proposal and submit it on the official site during the application window."],
+    url:"https://summerofcode.withgoogle.com/", status:"partial", checkedOn:"2026-11-01",
+    verifyNote:"2026 dates come from Google’s timeline page and organisation announcements. Google says dates can shift each year." },
+  { id:"outreachy", org:"Outreachy", title:"Open source internship (paid, remote)", domain:"Open source and free software — programming, design, documentation, data science",
+    mode:"Remote", duration:"3 months. Rounds run May–August and December–March.",
+    stipend:"Paid. USD 7,000 in the official applicant docs we saw; confirm the figure for the current round.",
+    certificate:"Not stated in the sources checked.", eligibility:"Open to applicants who meet Outreachy’s published rules, which focus on people underrepresented in tech and include rules on availability and past internships.",
+    deadline:"The December 2026 round’s initial applications opened 24 Aug 2026. Check the current-round page for its deadline and the next round.",
+    stateLabel:"Check current round", when:"Two rounds a year",
+    steps:["Read the eligibility rules on the official site.","Open the current round page and check whether applications are open.","Submit the initial application.","If approved, choose a project, make contributions and submit the final application."],
+    url:"https://www.outreachy.org/", status:"partial", checkedOn:"2026-11-01",
+    verifyNote:"Round dates read from Outreachy’s December 2026 cohort page; the stipend figure comes from older applicant docs." }
+];
+
+const SECTIONS = [
+  { n:"01", t:"Free Certified Courses", d:"Searchable list with enrollment steps and certificate terms.", href:"courses.html", c:"var(--teal)", s:"var(--teal-soft)" },
+  { n:"02", t:"Internships", d:"Programmes with stipend status, deadlines and how to apply.", href:"internships.html", c:"var(--terra)", s:"var(--terra-soft)" },
+  { n:"03", t:"Portfolio Inspiration", d:"Curated portfolio sites to study, with notes on what works.", href:"portfolios.html", c:"var(--plum)", s:"var(--plum-soft)" },
+  { n:"04", t:"GitHub Repositories", d:"Repositories worth reading, by skill level and technology.", href:"github-repos.html", c:"var(--graphite)", s:"var(--graphite-soft)" },
+  { n:"05", t:"Project Ideas", d:"Portfolio-ready projects with difficulty and learning outcomes.", href:"project-ideas.html", c:"var(--marigold)", s:"var(--marigold-soft)" },
+  { n:"06", t:"Additional Resources", d:"Tools, learning platforms and career resources.", href:"resources.html", c:"var(--sky)", s:"var(--sky-soft)" }
+];
+
+const PROJECTS = [
+  { id:"tracker", name:"Course and deadline tracker", level:1, levelLabel:"Beginner", category:"Web",
+    summary:"A single-page app to list the courses you’re taking, their deadlines and your progress.",
+    tech:["HTML","CSS","JavaScript","localStorage"],
+    outcomes:["DOM manipulation and events","Form validation","Saving state in the browser"],
+    start:"Build a static list first. Add a form to create items, save them to localStorage, then add filters by status and a due-date sort. Publish it on GitHub Pages." },
+  { id:"kanban", name:"Application kanban board", level:2, levelLabel:"Intermediate", category:"Web",
+    summary:"Track internship and job applications across columns such as Saved, Applied, Interview and Offer.",
+    tech:["JavaScript or React","Drag and drop","JSON export"],
+    outcomes:["State management","Keyboard-accessible drag and drop","Importing and exporting data"],
+    start:"Model a card as a small object, render columns from an array, then add move buttons before drag and drop. Add JSON export so users own their data." },
+  { id:"linkrot", name:"Link-rot checker", level:2, levelLabel:"Intermediate", category:"Automation",
+    summary:"A command-line tool that reads a list of links, checks each one and reports which are broken or redirected.",
+    tech:["Python","requests or httpx","argparse","GitHub Actions"],
+    outcomes:["HTTP status codes and redirects","Concurrency and timeouts","Running checks on a schedule"],
+    start:"Start with one URL and print its status. Loop over a text file, add timeouts and retries, then run it weekly with a scheduled GitHub Actions workflow." }
+];
+
+/* Repos: the numbers are fetched live; name/level/tech/blurb below are our own curation. */
+const REPOS = [
+  { full:"freeCodeCamp/freeCodeCamp", level:"All levels", tech:["JavaScript","TypeScript"], blurb:"The open-source codebase and curriculum behind freeCodeCamp." },
+  { full:"EbookFoundation/free-programming-books", level:"Beginner", tech:["Markdown"], blurb:"A community-maintained index of freely available programming books and courses." },
+  { full:"practical-tutorials/project-based-learning", level:"Beginner–Intermediate", tech:["Markdown"], blurb:"A curated list of tutorials that teach by building real projects." },
+  { full:"kamranahmedse/developer-roadmap", level:"Beginner", tech:["Roadmaps"], blurb:"Role-based roadmaps that show what to learn and in what order." },
+  { full:"public-apis/public-apis", level:"Beginner–Intermediate", tech:["APIs"], blurb:"A collective list of free APIs — handy raw material for portfolio projects." }
+];
+
+const RESOURCES = [
+  { name:"MDN Web Docs", url:"https://developer.mozilla.org/", note:"Reference and guides for HTML, CSS and JavaScript.", status:"unverified", checkedOn:null },
+  { name:"roadmap.sh", url:"https://roadmap.sh/", note:"Step-by-step learning roadmaps for many tech roles.", status:"unverified", checkedOn:null },
+  { name:"The Odin Project", url:"https://www.theodinproject.com/", note:"A project-based web development curriculum.", status:"unverified", checkedOn:null },
+  { name:"GitHub Education", url:"https://education.github.com/", note:"Student and learner programmes from GitHub.", status:"unverified", checkedOn:null }
+];
+
+/* ---------- 3. HELPERS ---------- */
+const $  = (s, r = document) => r.querySelector(s);
+const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
+const esc = v => String(v ?? "").replace(/[&<>"']/g, c => ({ "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;" }[c]));
+const store = {
+  get(k){ try { return localStorage.getItem(k); } catch { return null; } },
+  set(k,v){ try { localStorage.setItem(k,v); } catch { /* storage unavailable — ignore */ } }
+};
+const fmtDate = iso => iso ? new Intl.DateTimeFormat("en-GB",{ day:"numeric", month:"short", year:"numeric", timeZone:"UTC" }).format(new Date(iso + "T00:00:00Z")) : "not yet checked";
+const ico = (id, cls = "i") => `<svg class="${cls}" aria-hidden="true"><use href="#i-${id}"/></svg>`;
+const latest = list => list.map(x => x.checkedOn).filter(Boolean).sort().pop();
+let toastTimer;
+function toast(msg){ const t = $("#toast"); t.textContent = msg; t.classList.add("show"); clearTimeout(toastTimer); toastTimer = setTimeout(() => t.classList.remove("show"), 2400); }
+const reducedMotion = () => document.documentElement.dataset.motion === "reduced" || matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+/* ---------- 4. COMPONENTS ---------- */
+function logoMarkup(url, alt){
+  return url ? `<img src="${esc(url)}" alt="${esc(alt)}" loading="lazy" width="46" height="46">`
+             : `<span class="logo-ph" title="Add a logo URL in the data (logoUrl)">${ico("image")}</span>`;
+}
+function verifyMarkup(status, checkedOn, note){
+  return `<div class="verify verify-${esc(status)}"><span class="dot"></span><div><strong>${esc(STATUS[status])}</strong><span>${checkedOn ? "Last checked " + esc(fmtDate(checkedOn)) : "Not yet checked"}${note ? " · " + esc(note) : ""}</span></div></div>`;
+}
+/* REUSABLE COURSE CARD — the courses page uses this exact structure */
+function courseCard(c){
+  const tagClass = { free:"tag-free", cond:"tag-cond", paid:"tag-paid" }[c.certKind] || "tag-muted";
+  return `<article class="card course" data-cat="${esc(c.cat)}" id="course-${esc(c.id)}">
+    <header class="card-head"><span class="logo-slot">${logoMarkup(c.logoUrl, c.provider + " logo")}</span><div><p class="provider">${esc(c.provider)}</p><h3>${esc(c.name)}</h3></div></header>
+    <p class="desc">${esc(c.description)}</p>
+    <dl class="facts">
+      <div><dt>Enrollment</dt><dd><span class="tag tag-free">Free to enroll</span>${esc(c.enrollNote)}</dd></div>
+      <div><dt>Certificate</dt><dd><span class="tag ${tagClass}">${esc(c.certLabel)}</span>${esc(c.certNote)}</dd></div>
+      <div><dt>Cost</dt><dd>${esc(c.cost)}</dd></div>
+      <div><dt>Eligibility</dt><dd>${esc(c.eligibility)}</dd></div>
+      ${c.certPreview ? `<div><dt>Preview</dt><dd><img src="${esc(c.certPreview)}" alt="Sample certificate from ${esc(c.provider)}" loading="lazy" style="border-radius:8px;border:1px solid var(--line)"></dd></div>` : ""}
+    </dl>
+    <details class="steps"><summary>How to enroll</summary><ol>${c.steps.map(s => `<li>${esc(s)}</li>`).join("")}</ol></details>
+    ${verifyMarkup(c.status, c.checkedOn, c.verifyNote)}
+    <div class="card-foot"><a class="btn btn-teal btn-sm" href="${esc(c.url)}" target="_blank" rel="noopener noreferrer">Official page ${ico("ext")}<span class="sr-only"> (opens in a new tab)</span></a></div>
+  </article>`;
+}
+/* REUSABLE INTERNSHIP TICKET — the internships page uses this exact structure */
+function ticket(n){
+  return `<article class="ticket" id="intern-${esc(n.id)}">
+    <div class="ticket-stub"><div><span class="eyebrow">Programme</span><p class="when" style="margin-top:8px">${esc(n.when)}</p></div><span class="status">${esc(n.stateLabel)}</span></div>
+    <div class="ticket-body">
+      <div><p class="ticket-org">${esc(n.org)}</p><h3>${esc(n.title)}</h3></div>
+      <dl class="t-grid">
+        <div><dt>Domain</dt><dd>${esc(n.domain)}</dd></div>
+        <div><dt>Mode</dt><dd>${esc(n.mode)}</dd></div>
+        <div><dt>Duration</dt><dd>${esc(n.duration)}</dd></div>
+        <div><dt>Stipend</dt><dd>${esc(n.stipend)}</dd></div>
+        <div><dt>Certificate</dt><dd>${esc(n.certificate)}</dd></div>
+        <div><dt>Eligibility</dt><dd>${esc(n.eligibility)}</dd></div>
+        <div style="grid-column:1/-1"><dt>Deadline</dt><dd>${esc(n.deadline)}</dd></div>
+      </dl>
+      <details class="steps"><summary>How to apply</summary><ol>${n.steps.map(s => `<li>${esc(s)}</li>`).join("")}</ol></details>
+      ${verifyMarkup(n.status, n.checkedOn, n.verifyNote)}
+      <div class="card-foot"><a class="btn btn-terra btn-sm" href="${esc(n.url)}" target="_blank" rel="noopener noreferrer">Official application page ${ico("ext")}<span class="sr-only"> (opens in a new tab)</span></a></div>
+    </div></article>`;
+}
+function projectCard(p){
+  return `<article class="card pcard">
+    <div style="display:flex;justify-content:space-between;gap:8px;align-items:center"><span class="tag tag-muted">${esc(p.category)}</span>
+      <div class="meter" role="img" aria-label="Difficulty: ${esc(p.levelLabel)}">${[1,2,3].map(i => `<i class="${i <= p.level ? "on" : ""}"></i>`).join("")}<span>${esc(p.levelLabel)}</span></div></div>
+    <h3>${esc(p.name)}</h3><p class="desc">${esc(p.summary)}</p>
+    <div class="chips" aria-label="Technologies">${p.tech.map(t => `<span class="tag tag-info">${esc(t)}</span>`).join("")}</div>
+    <div><p class="provider" style="margin-top:4px">You will learn</p><ul class="outcomes">${p.outcomes.map(o => `<li>${esc(o)}</li>`).join("")}</ul></div>
+    <details class="steps"><summary>How to start</summary><p style="margin-top:10px;color:var(--ink-2);font-size:.9rem">${esc(p.start)}</p></details>
+  </article>`;
+}
+function tileMarkup(s){
+  return `<a class="tile reveal" href="${esc(s.href)}" style="--t:${s.c};--t-soft:${s.s}"><span class="num">${esc(s.n)}</span><h3>${esc(s.t)}</h3><p>${esc(s.d)}</p><span class="go">Open section ${ico("arrow")}</span></a>`;
+}
+function resourceMarkup(r){
+  return `<a class="rlink reveal" href="${esc(r.url)}" target="_blank" rel="noopener noreferrer"><strong>${esc(r.name)} ${ico("ext")}</strong><p>${esc(r.note)}</p>${verifyMarkup(r.status, r.checkedOn, "")}</a>`;
+}
+
+/* Course filters (functional, with empty state and live count) */
+function initCourses(){
+  const bar = $("#courseFilters"), grid = $("#courseGrid"), count = $("#courseCount");
+  let current = "all";
+  bar.innerHTML = COURSE_CATS.map(([id, label]) => `<button class="chip" type="button" data-cat="${id}" aria-pressed="${id === "all"}">${esc(label)}</button>`).join("");
+  function render(){
+    const list = current === "all" ? COURSES : COURSES.filter(c => c.cat === current);
+    grid.innerHTML = list.length ? list.map(courseCard).join("")
+      : `<div class="empty"><strong>No highlights in this category yet.</strong>Try another filter, or open the full courses page.<br><br><a class="btn btn-teal btn-sm" href="courses.html?category=${esc(current)}">See all ${esc(current)} courses</a></div>`;
+    count.textContent = `Showing ${list.length} of ${COURSES.length} course highlights.`;
+  }
+  bar.addEventListener("click", e => {
+    const b = e.target.closest(".chip"); if (!b) return;
+    current = b.dataset.cat;
+    $$(".chip", bar).forEach(x => x.setAttribute("aria-pressed", String(x === b)));
+    render();
+  });
+  render();
+}
+
+/* Verification log, generated from the data above */
+function initLog(){
+  const rows = [
+    ...COURSES.map(c => ({ n:c.name, t:"Course", s:c.status, d:c.checkedOn })),
+    ...INTERNSHIPS.map(i => ({ n:i.org + " — " + i.title, t:"Internship", s:i.status, d:i.checkedOn })),
+    ...RESOURCES.map(r => ({ n:r.name, t:"Resource", s:r.status, d:r.checkedOn }))
+  ];
+  $("#logBody").innerHTML = rows.map(r => `<tr><td>${esc(r.n)}</td><td>${esc(r.t)}</td><td>${esc(STATUS[r.s])}</td><td>${esc(fmtDate(r.d))}</td></tr>`).join("");
+  const all = latest([...COURSES, ...INTERNSHIPS, ...RESOURCES]);
+  $("#heroLastChecked").textContent = fmtDate(all);
+  $$("[data-latest-checked]").forEach(el => { el.textContent = fmtDate(latest(el.dataset.latestChecked === "courses" ? COURSES : INTERNSHIPS)); });
+}
+
+/* ---------- 5. NAV + MENU ---------- */
+function mountBrand(){
+  $$("[data-logo-slot]").forEach(slot => {
+    const placeholder = () => { slot.innerHTML = `<span class="logo-ph" title="Add your logo URL in BRAND.logoUrl">${ico("image")}</span>`; };
+    if (!BRAND.logoUrl) return placeholder();
+    const img = new Image(); img.alt = BRAND.name + " logo"; img.width = 36; img.height = 36; img.decoding = "async";
+    img.onerror = placeholder; img.src = BRAND.logoUrl; slot.replaceChildren(img);
+  });
+  if (BRAND.faviconUrl){ const l = document.createElement("link"); l.rel = "icon"; l.href = BRAND.faviconUrl; document.head.appendChild(l); }
+}
+function initNav(){
+  const wrap = $("#siteNav"), btn = $("#moreBtn"), menu = $("#moreMenu");
+  let lastY = scrollY, ticking = false;
+  const isOpen = () => !menu.hidden;
+  function setMenu(open, returnFocus){
+    menu.hidden = !open; btn.setAttribute("aria-expanded", String(open));
+    if (open){ wrap.classList.remove("is-hidden"); $$('[role^="menuitem"]', menu)[0]?.focus(); }
+    else if (returnFocus){ btn.focus(); }
+  }
+  btn.addEventListener("click", () => setMenu(!isOpen()));
+  menu.addEventListener("click", e => { if (e.target.closest("a.menu-item")) setMenu(false); });
+  document.addEventListener("click", e => { if (isOpen() && !menu.contains(e.target) && !btn.contains(e.target)) setMenu(false); });
+  document.addEventListener("keydown", e => {
+    if (!isOpen()) return;
+    if (e.key === "Escape"){ e.preventDefault(); setMenu(false, true); return; }
+    if (e.key === "ArrowDown" || e.key === "ArrowUp" || e.key === "Home" || e.key === "End"){
+      const items = $$('[role^="menuitem"]', menu), i = items.indexOf(document.activeElement);
+      let n = i;
+      if (e.key === "ArrowDown") n = (i + 1) % items.length;
+      if (e.key === "ArrowUp") n = (i - 1 + items.length) % items.length;
+      if (e.key === "Home") n = 0; if (e.key === "End") n = items.length - 1;
+      e.preventDefault(); items[n].focus();
+    }
+    if (e.key === "Tab" && !menu.contains(document.activeElement)) setMenu(false);
+  });
+  /* Hide on scroll down, reveal on scroll up */
+  addEventListener("scroll", () => {
+    if (ticking) return; ticking = true;
+    requestAnimationFrame(() => {
+      const y = scrollY, d = y - lastY;
+      if (y < 80) wrap.classList.remove("is-hidden");
+      else if (Math.abs(d) > 6){
+        if (d > 0 && !isOpen() && !wrap.contains(document.activeElement)) wrap.classList.add("is-hidden");
+        else if (d < 0) wrap.classList.remove("is-hidden");
+      }
+      lastY = y; ticking = false;
+    });
+  }, { passive:true });
+  wrap.addEventListener("focusin", () => wrap.classList.remove("is-hidden"));
+
+  /* Back button: only shown when there is somewhere to go back to */
+  const back = $("#backBtn");
+  if (history.length > 1 && document.referrer){ back.hidden = false; back.addEventListener("click", () => history.back()); }
+
+  /* Menu options */
+  const toggle = $("#motionToggle"), state = $("#motionState");
+  function applyMotion(reduced){
+    document.documentElement.dataset.motion = reduced ? "reduced" : "auto";
+    toggle.setAttribute("aria-checked", String(reduced)); state.textContent = reduced ? "on" : "off";
+  }
+  applyMotion(store.get("ts:motion") === "reduced");
+  toggle.addEventListener("click", () => { const next = toggle.getAttribute("aria-checked") !== "true"; applyMotion(next); store.set("ts:motion", next ? "reduced" : "auto"); toast(next ? "Motion reduced" : "Motion restored"); });
+  $("#copyLink").addEventListener("click", async () => {
+    try { await navigator.clipboard.writeText(location.href.split("#")[0]); toast("Page link copied"); }
+    catch { toast("Couldn’t copy — copy the address bar instead"); }
+    setMenu(false);
+  });
+  $("#toTop").addEventListener("click", () => { scrollTo({ top:0, behavior: reducedMotion() ? "auto" : "smooth" }); setMenu(false); });
+}
+
+/* ---------- 6. FEEDBACK FORM — works without inventing a backend ---------- */
+function initForm(){
+  const form = $("#feedbackForm"), status = $("#fbStatus");
+  const setErr = (k, m) => { $(`[data-err="${k}"]`).textContent = m || ""; };
+  function say(msg, extra){ status.hidden = false; status.textContent = msg; if (extra) status.appendChild(extra); }
+  form.addEventListener("submit", async e => {
+    e.preventDefault(); status.hidden = true;
+    const data = Object.fromEntries(new FormData(form));
+    let ok = true;
+    setErr("type"); setErr("url"); setErr("message");
+    if (!data.type){ setErr("type", "Please choose what this is about."); ok = false; }
+    if (data.url){ try { const u = new URL(data.url); if (!/^https?:$/.test(u.protocol)) throw 0; } catch { setErr("url", "Enter a full link starting with http:// or https://"); ok = false; } }
+    if (!data.message || data.message.trim().length < 10){ setErr("message", "Please add a few more details (at least 10 characters)."); ok = false; }
+    if (!ok){ form.querySelector("[data-err]:not(:empty)")?.previousElementSibling?.focus(); return; }
+
+    const text = `Type: ${data.type}\nLink: ${data.url || "—"}\nPage: ${location.href}\n\n${data.message.trim()}`;
+    const btn = $("#fbSubmit"); btn.disabled = true; btn.textContent = "Sending…";
+    try {
+      if (BRAND.feedback.endpoint){
+        const res = await fetch(BRAND.feedback.endpoint, { method:"POST", headers:{ "Content-Type":"application/json" }, body: JSON.stringify({ ...data, page: location.href }) });
+        if (!res.ok) throw new Error("HTTP " + res.status);
+        say("Thanks — your report was sent."); form.reset();
+      } else if (BRAND.feedback.email){
+        location.href = `mailto:${encodeURIComponent(BRAND.feedback.email)}?subject=${encodeURIComponent("Today Skills: " + data.type)}&body=${encodeURIComponent(text)}`;
+        say("Your email app should open with the report filled in.");
+      } else {
+        const copy = document.createElement("button"); copy.type = "button"; copy.className = "btn btn-ghost btn-sm"; copy.style.marginTop = "10px"; copy.style.display = "flex";
+        copy.textContent = "Copy report text";
+        copy.addEventListener("click", async () => { try { await navigator.clipboard.writeText(text); toast("Report copied"); } catch { toast("Couldn’t copy automatically"); } });
+        say("The form isn’t connected to a destination yet, so nothing was sent. Set BRAND.feedback.endpoint or BRAND.feedback.email to enable sending.", copy);
+      }
+    } catch (err){
+      say("Sorry — that didn’t send (" + err.message + "). Please try again later.");
+    } finally { btn.disabled = false; btn.textContent = "Send"; }
+  });
+}
+
+/* ---------- 7. LIVE GITHUB DATA (public API, cached 6 h, with error + empty states) ---------- */
+const GH_TTL = 6 * 3600 * 1000;
+const compact = new Intl.NumberFormat("en", { notation:"compact", maximumFractionDigits:1 });
+function ago(iso){
+  const days = Math.max(0, Math.round((Date.now() - new Date(iso)) / 864e5));
+  if (days < 1) return "today"; if (days < 31) return days + "d ago";
+  const m = Math.round(days / 30.4); return m < 12 ? m + "mo ago" : Math.round(m / 12) + "y ago";
+}
+async function fetchRepo(full, force){
+  const key = "ts:gh:" + full;
+  if (!force){ try { const c = JSON.parse(store.get(key) || "null"); if (c && Date.now() - c.t < GH_TTL) return c.d; } catch { /* ignore bad cache */ } }
+  const res = await fetch("https://api.github.com/repos/" + full, { headers:{ Accept:"application/vnd.github+json" } });
+  if (!res.ok) throw new Error(res.status === 403 ? "rate limit reached" : "HTTP " + res.status);
+  const j = await res.json();
+  const d = { stars:j.stargazers_count, forks:j.forks_count, pushed:j.pushed_at, lang:j.language, url:j.html_url, desc:j.description, fetched:Date.now() };
+  store.set(key, JSON.stringify({ t:Date.now(), d })); return d;
+}
+function repoSkeleton(r){
+  return `<article class="card rcard" data-repo="${esc(r.full)}"><div class="skeleton" style="height:20px;width:70%"></div><div class="skeleton" style="height:14px"></div><div class="skeleton" style="height:14px;width:85%"></div><div class="skeleton" style="height:14px;width:50%"></div></article>`;
+}
+function repoCard(r, d, err){
+  const url = d?.url || "https://github.com/" + r.full;
+  return `<article class="card rcard" data-repo="${esc(r.full)}">
+    <h3><a href="${esc(url)}" target="_blank" rel="noopener noreferrer">${esc(r.full)}<span class="sr-only"> (opens in a new tab)</span></a></h3>
+    <p class="desc">${esc(r.blurb)}</p>
+    <div class="chips"><span class="tag tag-muted">${esc(r.level)}</span>${[...r.tech, ...(d?.lang && !r.tech.includes(d.lang) ? [d.lang] : [])].map(t => `<span class="tag tag-info">${esc(t)}</span>`).join("")}</div>
+    ${d ? `<div class="stats"><span>${ico("star")}${esc(compact.format(d.stars))} stars</span><span>${ico("fork")}${esc(compact.format(d.forks))} forks</span><span>${ico("clock")}pushed ${esc(ago(d.pushed))}</span></div>`
+        : `<div class="verify verify-unverified"><span class="dot"></span><div><strong>Live numbers unavailable</strong><span>${esc(err || "Could not reach GitHub")}. The link still works.</span></div></div>`}
+  </article>`;
+}
+async function loadRepos(force){
+  const grid = $("#repoGrid"), stamp = $("#repoStamp");
+  grid.setAttribute("aria-busy", "true"); stamp.textContent = "Loading from GitHub…";
+  grid.innerHTML = REPOS.map(repoSkeleton).join("");
+  const results = await Promise.allSettled(REPOS.map(r => fetchRepo(r.full, force)));
+  grid.innerHTML = REPOS.map((r, i) => results[i].status === "fulfilled" ? repoCard(r, results[i].value) : repoCard(r, null, results[i].reason?.message)).join("");
+  grid.setAttribute("aria-busy", "false");
+  const okOnes = results.filter(x => x.status === "fulfilled").map(x => x.value.fetched);
+  stamp.textContent = okOnes.length ? "Live data fetched " + new Date(Math.max(...okOnes)).toLocaleTimeString([], { hour:"2-digit", minute:"2-digit" }) : "Live data unavailable right now";
+}
+
+/* ---------- 8. FOOTER, DIALOGS, REVEAL, BOOT ---------- */
+function initFooter(){
+  $("#year").textContent = new Date().getFullYear();
+  const c = BRAND.contact;
+  const row = (label, val, href) => `<li>${val ? `<a href="${esc(href)}">${esc(val)}</a>` : `<span class="ph">${esc(label)}: add in BRAND.contact</span>`}</li>`;
+  $("#contactList").innerHTML = row("Email", c.email, "mailto:" + c.email) + row("Phone", c.phone, "tel:" + c.phone.replace(/\s+/g, "")) + `<li>${c.address ? esc(c.address) : `<span class="ph">Address: add in BRAND.contact</span>`}</li>`;
+  const names = { linkedin:"LinkedIn", instagram:"Instagram", youtube:"YouTube", x:"X", github:"GitHub" };
+  $("#socialRow").innerHTML = Object.entries(names).map(([k, label]) => BRAND.social[k]
+    ? `<a href="${esc(BRAND.social[k])}" target="_blank" rel="noopener noreferrer">${label}<span class="sr-only"> (opens in a new tab)</span></a>`
+    : `<span title="Add the ${label} profile URL in BRAND.social.${k}" aria-label="${label}: not set yet">${label}</span>`).join("");
+}
+function initDialogs(){
+  $$("[data-dialog]").forEach(b => b.addEventListener("click", () => { const d = $("#" + b.dataset.dialog); typeof d.showModal === "function" ? d.showModal() : d.setAttribute("open", ""); }));
+  $$("dialog").forEach(d => {
+    d.addEventListener("click", e => { if (e.target === d || e.target.closest("[data-close]")) d.close ? d.close() : d.removeAttribute("open"); });
+  });
+}
+function initReveal(){
+  const els = $$(".reveal");
+  if (!("IntersectionObserver" in window) || reducedMotion()){ els.forEach(e => e.classList.add("in")); return; }
+  const io = new IntersectionObserver(entries => entries.forEach(en => { if (en.isIntersecting){ en.target.classList.add("in"); io.unobserve(en.target); } }), { rootMargin:"0px 0px -8% 0px", threshold:.08 });
+  els.forEach(e => io.observe(e));
+}
+
+function boot(){
+  mountBrand();
+  $("#ticketGrid").innerHTML = INTERNSHIPS.map(ticket).join("");
+  $("#tiles").innerHTML = SECTIONS.map(tileMarkup).join("");
+  $("#projectGrid").innerHTML = PROJECTS.map(projectCard).join("");
+  $("#resourceGrid").innerHTML = RESOURCES.map(resourceMarkup).join("");
+  initCourses(); initLog(); initNav(); initForm(); initFooter(); initDialogs();
+  $("#refreshRepos").addEventListener("click", () => loadRepos(true));
+  loadRepos(false);
+  initReveal();
+}
+document.addEventListener("DOMContentLoaded", boot);
+</script>
+</body>
+</html>
